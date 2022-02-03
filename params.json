@@ -1,0 +1,8 @@
+{
+  "poolId": {
+    "value": "mypool"
+  },
+  "nodeCount": {
+    "value": 2
+  }
+}

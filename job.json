@@ -1,0 +1,34 @@
+{
+    "job": {
+        "type": "Microsoft.Batch/batchAccounts/jobs",
+        "apiVersion": "2016-12-01",
+        "properties": {
+            "id": "myjob",
+            "constraints": {
+                "maxWallClockTime": "PT5H",
+                "maxTaskRetryCount": 1
+            },
+            "poolInfo": {
+                "poolId": "mypool"
+            },
+            "taskFactory": {
+                "type": "parametricSweep",
+                "parameterSets": [{
+                    "start": 1,
+                    "end": 10,
+                    "step": 1
+                }],
+               "repeatTask": {
+                 "commandLine": "/bin/bash -c 'echo Hello world from task {0}; sleep 120'",
+                    "constraints": {
+                        "retentionTime":"PT1H"
+                    },
+                    "containerSettings": {
+                        "imageName": "ubuntu:20.04"
+                    }
+                }
+            },
+            "onAllTasksComplete": "terminatejob"
+        }
+    }
+}

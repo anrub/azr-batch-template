@@ -1,0 +1,39 @@
+{    "parameters": {
+        "nodeCount": {
+            "type": "int",
+            "metadata": {
+                "description": "The number of pool nodes"
+            }
+        },
+        "poolId": {
+            "type": "string",
+            "metadata": {
+                "description": "The pool ID "
+            }
+        }
+    },
+    "pool": {
+        "type": "Microsoft.Batch/batchAccounts/pools",
+        "apiVersion": "2016-12-01",
+        "properties": {
+            "id": "[parameters('poolId')]",
+            "virtualMachineConfiguration": {
+                "imageReference": {
+                    "publisher": "microsoft-azure-batch",
+                    "offer": "ubuntu-server-container",
+                    "sku": "20-04-lts",
+                    "version": "latest"
+                },
+                "nodeAgentSKUId": "batch.node.ubuntu 20.04",
+		"containerConfiguration": {
+			"containerImageNames":["hello-world:latest"]
+			}
+            },
+            "vmSize": "STANDARD_D2s_V3",
+            "targetDedicatedNodes": "[parameters('nodeCount')]",
+            "enableAutoScale": false
+            ]
+        }
+    }
+}
+
